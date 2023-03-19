@@ -2,33 +2,66 @@
 
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.css' rel='stylesheet' />
 
-    <h1>
-        <%= lat %>
-    </h1>
-    <h2>
-        <%= lon %>
-    </h2>
-    <div class="dummy"></div>
     <div id='map' style='width: 100%; height: 600px;'></div>
-    <script src="../public/map.js"></script>
-    <script>
 
-        lat = document.querySelector("h1").innerText
-        lon = document.querySelector("h2").innerText
-        document.querySelector("h1").style.display = "none";
-        document.querySelector("h2").style.display = "none";
+    <script type="module">
 
-        mapboxgl.accessToken = 'pk.eyJ1Ijoia2FydGhpa2V5YW5iYWxhamkiLCJhIjoiY2t2dGd3YmVnM2NrajJudGt1eHdscWVqMyJ9.A0jCxbqQ2SvjO8TVEz2Hxg';
-        const map = new mapboxgl.Map({
-            container: 'map', // container ID
-            style: 'mapbox://styles/mapbox/streets-v12', // style URL
-            center: [lon, lat], // starting position [lng, lat]
-            zoom: 15, // starting zoom
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.4.0/firebase-app.js";
+        import { getDatabase, onValue, ref, get } from "https://www.gstatic.com/firebasejs/9.4.0/firebase-database.js";
+
+        let id = parseInt("<%-id%>")
+        const firebaseConfig = { databaseURL: "https://locationtracker-62c3f-default-rtdb.firebaseio.com/", };
+        const app2 = initializeApp(firebaseConfig);
+        const database = getDatabase(app2);
+        let lati;
+        let longi;
+        let map;
+        let marker;
+        const db = getDatabase();
+        let once = true;
+        onValue(ref(db, "users/"), function getdata(snapshot) {
+            console.log("...............onvalue.............")
+            let datas = snapshot.val();
+            console.log(datas)
+            lati = JSON.stringify(datas[id].lat)
+            longi = JSON.stringify(datas[id].lon)
+
+            console.log(longi, lati)
+            console.log()
+            console.log("changed22")
+            console.log("............................")
+            show(lati,longi)
+         
         });
-        // Create a new marker.
-        const marker = new mapboxgl.Marker()
-            .setLngLat([lon, lat])
-            .addTo(map);
-        // setTimeout(function(){
-        //     window.location.reload(1);},3000);
+        function show(lati,longi){
+            if (once){
+            mapboxgl.accessToken = 'pk.eyJ1Ijoia2FydGhpa2V5YW5iYWxhamkiLCJhIjoiY2t2dGd3YmVnM2NrajJudGt1eHdscWVqMyJ9.A0jCxbqQ2SvjO8TVEz2Hxg';
+            map = new mapboxgl.Map({
+                container: 'map', // container ID
+                style: 'mapbox://styles/mapbox/streets-v12', // style URL  
+                center: [longi, lati], // starting position [lng, lat]
+                zoom: 15, // starting zoom
+            });
+            console.log(longi,lati)
+            marker = new mapboxgl.Marker()    
+                .setLngLat([longi, lati])
+                .addTo(map)
+            
+            once = false
+        }
+        mark(lati,longi,map)
+        }
+        function mark(lati,longi,map){
+            marker.remove();
+            console.log(longi,lati)
+            marker = new mapboxgl.Marker()    
+                .setLngLat([longi, lati])
+                .addTo(map)
+            map.center = [longi, lati]     
+        }
+    
+    
+
     </script>
+    <div class="dummy"></div>
+
