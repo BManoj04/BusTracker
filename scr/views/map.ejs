@@ -30,38 +30,42 @@
             console.log()
             console.log("changed22")
             console.log("............................")
-            show(lati,longi)
-         
+            show(lati, longi)
+
         });
-        function show(lati,longi){
-            if (once){
-            mapboxgl.accessToken = 'pk.eyJ1Ijoia2FydGhpa2V5YW5iYWxhamkiLCJhIjoiY2t2dGd3YmVnM2NrajJudGt1eHdscWVqMyJ9.A0jCxbqQ2SvjO8TVEz2Hxg';
-            map = new mapboxgl.Map({
-                container: 'map', // container ID
-                style: 'mapbox://styles/mapbox/streets-v12', // style URL  
-                center: [longi, lati], // starting position [lng, lat]
-                zoom: 15, // starting zoom
-            });
-            console.log(longi,lati)
-            marker = new mapboxgl.Marker()    
+        function show(lati, longi) {
+            if (once) {
+                mapboxgl.accessToken = 'pk.eyJ1Ijoia2FydGhpa2V5YW5iYWxhamkiLCJhIjoiY2t2dGd3YmVnM2NrajJudGt1eHdscWVqMyJ9.A0jCxbqQ2SvjO8TVEz2Hxg';
+                map = new mapboxgl.Map({
+                    container: 'map', // container ID
+                    style: 'mapbox://styles/mapbox/streets-v12', // style URL  
+                    center: [longi, lati], // starting position [lng, lat]
+                    zoom: 15, // starting zoom
+                });
+                console.log(longi, lati)
+                marker = new mapboxgl.Marker()
+                    .setLngLat([longi, lati])
+                    .addTo(map)
+
+                once = false
+            }
+            mark(lati, longi, map)
+        }
+        function mark(lati, longi, map) {
+            marker.remove();
+            console.log(longi, lati)
+            marker = new mapboxgl.Marker()
                 .setLngLat([longi, lati])
                 .addTo(map)
             
-            once = false
+
+            map.flyTo({
+                center: [longi,lati],
+                essential: true 
+            });
         }
-        mark(lati,longi,map)
-        }
-        function mark(lati,longi,map){
-            marker.remove();
-            console.log(longi,lati)
-            marker = new mapboxgl.Marker()    
-                .setLngLat([longi, lati])
-                .addTo(map)
-            map.center = [longi, lati]     
-        }
-    
-    
+
+
 
     </script>
     <div class="dummy"></div>
-
