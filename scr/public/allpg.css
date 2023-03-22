@@ -12,6 +12,10 @@
 .dummy2 {
   margin-top: 40px;
 }
+.icon{
+  display: flex;
+  align-items: stretch;
+}
 
 body {
   margin: 0 auto;
@@ -37,6 +41,8 @@ nav {
   text-transform: uppercase;
   letter-spacing: 5px;
   font-size: 20px;
+  display: flex;
+  align-items: stretch;
 }
 
 .nav-links {

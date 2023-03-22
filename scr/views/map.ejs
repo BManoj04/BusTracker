@@ -31,7 +31,6 @@
             console.log("changed22")
             console.log("............................")
             show(lati, longi)
-
         });
         function show(lati, longi) {
             if (once) {
@@ -40,16 +39,30 @@
                     container: 'map', // container ID
                     style: 'mapbox://styles/mapbox/streets-v12', // style URL  
                     center: [longi, lati], // starting position [lng, lat]
-                    zoom: 15, // starting zoom
+                    pitch: 0, // pitch in degrees
+                    zoom: 12.5, // starting zoom
                 });
                 console.log(longi, lati)
+                
+
+                // var el = document.createElement('div');
+                // el.className = 'marker';
+                // el.style.backgroundImage = 'url()';
+                // el.style.width = '20px';
+                // el.style.height = '20px';
+
                 marker = new mapboxgl.Marker()
                     .setLngLat([longi, lati])
                     .addTo(map)
-
+                map.addControl(new mapboxgl.NavigationControl());
+                
                 once = false
+
             }
             mark(lati, longi, map)
+           
+            
+            
         }
         function mark(lati, longi, map) {
             marker.remove();
@@ -57,11 +70,11 @@
             marker = new mapboxgl.Marker()
                 .setLngLat([longi, lati])
                 .addTo(map)
-            
 
             map.flyTo({
-                center: [longi,lati],
-                essential: true 
+                center: [longi, lati],
+                duration: 1000,
+                essential: true
             });
         }
 

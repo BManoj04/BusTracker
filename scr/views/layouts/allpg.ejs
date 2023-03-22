@@ -11,6 +11,10 @@
     <script src='https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.css' rel='stylesheet' />
     <script src="map.js"></script>
+    <script src="https://cdn.lordicon.com/ritcuqlt.js"></script>
+    
+
+</lord-icon>
 
     <title>BusTracker</title>
 </head>
@@ -22,11 +26,23 @@
     <div class="wrapper">
 
         <nav>
-            <div class="logo">
+            <div class="logo icon">
+                <lord-icon
+                src="https://cdn.lordicon.com/oaflahpk.json"
+                trigger="loop"
+                delay = "5000"
+                axis-x="60"
+                axis-Y="45"
+                colors="primary:#e88c30"
+                state="hover-jump-spin"
+                style="width:50px;height:30px">
+            </lord-icon>
                 <h4>Bus Tracker</h4>
+                
             </div>
             <ul class="nav-links">
-                <li><a href="/">Home</a></li>
+                <li class="icon"><a href="/">Home
+                    </a></li>
                 <li><a href="/1">Bus 1</a></li>
                 <li><a href="/2">Bus 2</a></li>
                 <li><a href="/3">Bus 3</a></li>
