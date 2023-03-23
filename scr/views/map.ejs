@@ -40,14 +40,14 @@
                     style: 'mapbox://styles/mapbox/streets-v12', // style URL  
                     center: [longi, lati], // starting position [lng, lat]
                     pitch: 0, // pitch in degrees
-                    zoom: 12.5, // starting zoom
+                    bearing:-80,
+                    zoom: 13.5, // starting zoom
                 });
                 console.log(longi, lati)
-                
 
                 // var el = document.createElement('div');
                 // el.className = 'marker';
-                // el.style.backgroundImage = 'url()';
+                // el.style.backgroundImage = 'url(https://raw.githubusercontent.com/phatblat/BlueDot/0.1.1/bluedot.gif)';
                 // el.style.width = '20px';
                 // el.style.height = '20px';
 
@@ -55,14 +55,19 @@
                     .setLngLat([longi, lati])
                     .addTo(map)
                 map.addControl(new mapboxgl.NavigationControl());
-                
-                once = false
+                map.on('load', function() {
+                    map.flyTo({
+                        zoom:16.5,
+                        pitch: 50,
+                        bearing:0,
+                        duration: 3000
+                    });
+                });
 
+                once = false
             }
             mark(lati, longi, map)
-           
-            
-            
+
         }
         function mark(lati, longi, map) {
             marker.remove();
@@ -77,8 +82,6 @@
                 essential: true
             });
         }
-
-
 
     </script>
     <div class="dummy"></div>
