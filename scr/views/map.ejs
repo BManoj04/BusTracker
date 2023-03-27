@@ -2,12 +2,19 @@
 
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.css' rel='stylesheet' />
 
-    <div class="alert alert-success d-none" role="alert">
+    <div class="alert alert-success d-none nodata" role="alert">
         <h4 class="alert-heading">No Data!</h4>
         <hr>
-        <p>Aww yeah, bus - <%= id %> has no data available at the current time, check again later</p>
+        <p>Aww yeah, bus - <%= id %> has no data available at the current time, check again later.</p>
     </div>
-    <div id='map' style='width: 100%; height: 600px;'></div>
+
+    <div class="alert alert-success d-none offline" role="alert">
+        <h4 class="alert-heading">Network Error!!
+        <hr>
+        <p>Oops...check your network connectivity and try again.</p>
+    </div>
+
+    <div id='map' style='width: 100%; height: 600px; margin-top: 75px;'></div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.4.0/firebase-app.js";
@@ -17,26 +24,29 @@
         const firebaseConfig = { databaseURL: "https://locationtracker-62c3f-default-rtdb.firebaseio.com/", };
         const app2 = initializeApp(firebaseConfig);
         const database = getDatabase(app2);
-        let lati;
-        let longi;
-        let map;
-        let marker;
+        let lati, longi, map, marker;
         const db = getDatabase();
         let once = true;
+        window.addEventListener("offline", (event) => {
+            document.querySelector(".offline").classList.remove("d-none")
+        });
+        window.addEventListener("online", (event) => {
+            document.querySelector(".offline").classList.add("d-none")
+        });
         onValue(ref(db, "users/"), function getdata(snapshot) {
             console.log("...............onvalue.............")
             let datas = snapshot.val();
             console.log(datas)
-            if(!datas[id]){
+            if (!datas[id]) {
                 document.querySelector(".alert").classList.remove("d-none")
-            }else{
-            lati = JSON.stringify(datas[id].lat)
-            longi = JSON.stringify(datas[id].lon)
-            console.log(longi, lati)
-            console.log()
-            console.log("changed22")
-            console.log("............................")
-            show(lati, longi)
+            } else {
+                lati = JSON.stringify(datas[id].lat)
+                longi = JSON.stringify(datas[id].lon)
+                console.log(longi, lati)
+                console.log()
+                console.log("changed22")
+                console.log("............................")
+                show(lati, longi)
             }
         });
         function show(lati, longi) {
@@ -47,7 +57,7 @@
                     style: 'mapbox://styles/mapbox/streets-v12', // style URL  
                     center: [longi, lati], // starting position [lng, lat]
                     pitch: 0, // pitch in degrees
-                    bearing:-80,
+                    bearing: -80,
                     zoom: 13.5, // starting zoom
                 });
                 console.log(longi, lati)
@@ -62,11 +72,11 @@
                     .setLngLat([longi, lati])
                     .addTo(map)
                 map.addControl(new mapboxgl.NavigationControl());
-                map.on('load', function() {
+                map.on('load', function () {
                     map.flyTo({
-                        zoom:16.5,
+                        zoom: 16.5,
                         pitch: 50,
-                        bearing:0,
+                        bearing: 0,
                         duration: 3000
                     });
                 });
