@@ -1,21 +1,30 @@
 <%- layout("layouts/allpg.ejs") %>
 
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.css' rel='stylesheet' />
-
+    <style>
+        .mapboxgl-popup {
+            max-width: 400px;
+            font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+        }
+    </style>
     <div class="alert alert-success d-none nodata" role="alert">
         <h4 class="alert-heading">No Data!</h4>
         <hr>
         <p>Aww yeah, bus - <%= id %> has no data available at the current time, check again later.</p>
+        <form action="/">
+            <div class="text-center">
+                <button class="btn btn-outline-info" style="padding: 5px 30px;border-radius: 10px;">OK</button>
+            </div>
+        </form>
     </div>
 
     <div class="alert alert-success d-none offline" role="alert">
         <h4 class="alert-heading">Network Error!!
-        <hr>
-        <p>Oops...check your network connectivity and try again.</p>
+            <hr>
+            <p>Oops...check your network connectivity and try again.</p>
     </div>
 
     <div id='map' style='width: 100%; height: 600px; margin-top: 75px;'></div>
-
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.4.0/firebase-app.js";
         import { getDatabase, onValue, ref, get } from "https://www.gstatic.com/firebasejs/9.4.0/firebase-database.js";
@@ -80,18 +89,21 @@
                         duration: 3000
                     });
                 });
-
                 once = false
             }
             mark(lati, longi, map)
-
         }
         function mark(lati, longi, map) {
             marker.remove();
             console.log(longi, lati)
+            const popup = new mapboxgl.Popup({
+                focusAfterOpen: false
+            });
+
             marker = new mapboxgl.Marker()
                 .setLngLat([longi, lati])
                 .addTo(map)
+                .setPopup(popup.setText(`Bus-${id} has started it's journey`))
 
             map.flyTo({
                 center: [longi, lati],
