@@ -13,7 +13,6 @@
   display: flex;
   align-items: stretch;
 }
-
 *{
   box-sizing: border-box;
   padding: 0;
@@ -53,7 +52,7 @@ nav {
   
 }
 .nav-links a {
-  color: #ddd;
+  color: #bbb;
   text-decoration: none;
   letter-spacing: 3px;
   font-weight: bold;
@@ -150,3 +149,12 @@ nav {
   .toggle .line3 {
     transform: rotate(45deg) translate(-5px, -8px);
   }
+  /* <!--------------------------------------------------------- FOOTER END --------------------------------------------------> */
+  .circle{
+    border-radius: 50%;
+  }
+  footer{
+    background-color: #F37335;
+    border-top: #F37335;
+  }
+  
