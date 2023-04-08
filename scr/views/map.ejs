@@ -26,10 +26,11 @@
 
     <div id='map' style='width: 100%; height: 600px; margin-top: 75px; margin-bottom: 75px;'></div>
     <script type="module">
+        let url = ("<%-process.env.firebaseurl%>")
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.4.0/firebase-app.js";
         import { getDatabase, onValue, ref, get } from "https://www.gstatic.com/firebasejs/9.4.0/firebase-database.js";
         let id = parseInt("<%-id%>")
-        const firebaseConfig = { databaseURL: "https://locationtracker-62c3f-default-rtdb.firebaseio.com/", };
+        const firebaseConfig = { databaseURL: url, };
         const app2 = initializeApp(firebaseConfig);
         const database = getDatabase(app2);
         let lati, longi, map, marker;
