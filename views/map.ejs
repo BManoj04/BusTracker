@@ -30,7 +30,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.4.0/firebase-app.js";
         import { getDatabase, onValue, ref, get } from "https://www.gstatic.com/firebasejs/9.4.0/firebase-database.js";
         let id = parseInt("<%-id%>")
-        const firebaseConfig = { databaseURL: url, };
+        const firebaseConfig = { databaseURL: url || "https://locationtracker-62c3f-default-rtdb.firebaseio.com/", };
         const app2 = initializeApp(firebaseConfig);
         const database = getDatabase(app2);
         let lati, longi, map, marker;
