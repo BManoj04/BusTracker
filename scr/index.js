@@ -23,5 +23,5 @@ app.get("/:id", (req, res) => {
     res.render("map.ejs", { id,home })
 })
 
-app.listen(3000, () => {
+app.listen(process.env.PORT || 3000, () => {
 })
