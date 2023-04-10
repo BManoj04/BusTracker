@@ -33,7 +33,7 @@
         const firebaseConfig = { databaseURL: url || "https://locationtracker-62c3f-default-rtdb.firebaseio.com/", };
         const app2 = initializeApp(firebaseConfig);
         const database = getDatabase(app2);
-        let lati, longi, map, marker;
+        let lati, longi, map, marker, address;
         const db = getDatabase();
         let once = true;
         window.addEventListener("offline", (event) => {
@@ -49,8 +49,9 @@
             if (!datas[id]) {
                 document.querySelector(".alert").classList.remove("d-none")
             } else {
-                lati = JSON.stringify(datas[id].lat)
-                longi = JSON.stringify(datas[id].lon)
+                lati = datas[id].lat
+                longi = datas[id].lon
+                address = datas[id].address
                 // console.log(longi, lati)
                 // console.log()
                 // console.log("changed22")
@@ -58,7 +59,7 @@
                 show(lati, longi)
             }
         });
-        function show(lati, longi) {
+        function show(lati, longi,address) {
             if (once) {
                 mapboxgl.accessToken = 'pk.eyJ1Ijoia2FydGhpa2V5YW5iYWxhamkiLCJhIjoiY2t2dGd3YmVnM2NrajJudGt1eHdscWVqMyJ9.A0jCxbqQ2SvjO8TVEz2Hxg';
                 map = new mapboxgl.Map({
@@ -91,7 +92,7 @@
                 });
                 once = false
             }
-            mark(lati, longi, map)
+            mark(lati, longi, map, address)
         }
         function mark(lati, longi, map) {
             marker.remove();
@@ -103,7 +104,7 @@
             marker = new mapboxgl.Marker()
                 .setLngLat([longi, lati])
                 .addTo(map)
-                .setPopup(popup.setText(`Bus-${id} has started it's journey`))
+                .setPopup(popup.setText(`${address}`))
 
             map.flyTo({
                 center: [longi, lati],
