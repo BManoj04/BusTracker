@@ -5,15 +5,16 @@ const navSlide = () => {
   const navLinks = document.querySelectorAll('.nav-links li');
     
      // On scroll 
-  $(window).on('scroll', function() {
-  if ($(window).scrollTop()) {
-    $('nav').addClass('nav-opacity');
+
+window.addEventListener('scroll', (e) => {
+  if (window.scrollTop()) {
+    $('nav').classList.add("nav-opacity");
   }
   else { 
-    $('nav').removeClass('nav-opacity');
+    $('nav').classList.remove("nav-opacity");
   }
 });
-  
+  console,log(".")
     // Toggle Nav
   burger.addEventListener('click', () =>{
     nav.classList.toggle('nav-activ');
