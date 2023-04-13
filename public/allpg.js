@@ -14,7 +14,7 @@ window.addEventListener('scroll', (e) => {
     $('nav').classList.remove("nav-opacity");
   }
 });
-  console,log(".")
+  console.log(".");
     // Toggle Nav
   burger.addEventListener('click', () =>{
     nav.classList.toggle('nav-activ');
