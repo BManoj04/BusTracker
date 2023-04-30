@@ -20,9 +20,18 @@
 
     <div class="alert alert-success d-none offline" role="alert">
         <h4 class="alert-heading">Network Error!!</h4>
-            <hr>
-            <p>Oops...check your network connectivity and try again.</p>
+        <hr>
+        <p>Oops...check your network connectivity and try again.</p>
     </div>
+
+    <!-- Direction -->
+
+    <!-- <script
+        src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.1/mapbox-gl-directions.js"></script>
+    <link rel="stylesheet"
+        href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.1/mapbox-gl-directions.css"
+        type="text/css"> -->
+
 
     <div id='map' style='width: 100%; height: 600px; margin-top: 75px; margin-bottom: 75px;'></div>
     <script type="module">
@@ -59,7 +68,7 @@
                 show(lati, longi)
             }
         });
-        function show(lati, longi,address) {
+        function show(lati, longi, address) {
             if (once) {
                 mapboxgl.accessToken = 'pk.eyJ1Ijoia2FydGhpa2V5YW5iYWxhamkiLCJhIjoiY2t2dGd3YmVnM2NrajJudGt1eHdscWVqMyJ9.A0jCxbqQ2SvjO8TVEz2Hxg';
                 map = new mapboxgl.Map({
@@ -81,7 +90,14 @@
                 marker = new mapboxgl.Marker()
                     .setLngLat([longi, lati])
                     .addTo(map)
+                map.addControl(new mapboxgl.FullscreenControl());
                 map.addControl(new mapboxgl.NavigationControl());
+                // map.addControl(
+                //     new MapboxDirections({
+                //         accessToken: mapboxgl.accessToken
+                //     }),
+                //     'top-left'
+                // );
                 map.on('load', function () {
                     map.flyTo({
                         zoom: 16.5,
